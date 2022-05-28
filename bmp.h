@@ -61,7 +61,7 @@ struct DIB_HEADER
     uint_fast32_t image_size;
 
     uint_fast32_t additional[4]; // not used
-    uint_fast32_t compression_method[6]; // not used in code
+//    uint_fast32_t compression_method[6]; // not used in code
 } __attribute__((packed));
 
 typedef struct DIB_HEADER stDIB_HEADER;
@@ -96,10 +96,22 @@ struct Image
 
 typedef struct Image stImage;
 
-stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t height, uint_fast16_t bits_per_pixel);
+struct BITMAP_FILE
+{
+    stBITMAP_HEADER bmp_header;
+    uint_fast8_t *uneccessary;
+    stDIB_HEADER dib_header;
+    stImage pixel_array;
+} __attribute__((packed));
+
+typedef struct BITMAP_FILE stBitMapFile;
+
+stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t height, uint_fast16_t bits_per_pixel,
+                       uint_fast32_t bytes_to_read, uint_fast32_t number_of_rgb);
 void create_bmp_image(stBITMAP_HEADER const *bmp_header, stDIB_HEADER const *dib_header, stImage const *bmp_image);
 void free_bmp_image(stImage *bmp_image);
+stBitMapFile read_bmp_file(stBitMapFile *ptr_to_bmp, FILE *file_ptr);
 void open_bmp_file(const char filename[]);
 uint32_t get_intensity(stRGB pixel);
 void change_contrast(stRGB *ptr_pixel, float factor);
-void auto_adjusting(stImage *bmp_image);
+void auto_adjusting(stBitMapFile *bitMapFile);
