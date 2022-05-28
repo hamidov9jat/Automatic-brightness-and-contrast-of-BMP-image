@@ -36,7 +36,7 @@
 */
 struct BITMAP_HEADER {
     uint_fast8_t header_field[2]; // for 'B' and 'M'
-    uint_fast32_t header_size; // size of the bmp header
+    uint_fast32_t file_size; // size of the bmp file
     uint_fast32_t garbage; // two 2 bytes == 4 bytes that are not necessary for us
     uint_fast32_t image_offset; // starting address of the byte where the bitmap image starts
 } __attribute__((packed));
