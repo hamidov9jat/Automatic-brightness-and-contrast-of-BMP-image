@@ -112,6 +112,22 @@ void open_bmp_file(const char filename[]) {
     // file pointer is on top of the dib_header since we are using structure packing
     fread(&dibHeader, sizeof(dibHeader), 1, file_pointer);
 
+
+    printf("header size %u\n", dibHeader.header_size);
+    printf("width size %u\n", dibHeader.bmp_width);
+    printf("height size %u\n", dibHeader.bmp_height);
+    printf("Image size %u\n", dibHeader.image_size);
+    printf("Image size %u\n", dibHeader.image_size);
+    puts("--------------");
+    printf("header size %x\n", dibHeader.header_size);
+    printf("width size %x\n", dibHeader.bmp_width);
+    printf("height size %x\n", dibHeader.bmp_height);
+    printf("Image size %x\n", dibHeader.image_size);
+//    printf("%x\n", dibHeader.other[0]);
+//    printf("%x\n", dibHeader.other[1]);
+//    printf("%x\n", dibHeader.other[2]);
+//    printf("%x\n", dibHeader.other[3]);
+
     // move file pointer to the first byte where the image starts
     fseek(file_pointer, bmp_header.image_offset, SEEK_SET); // from the begging + image_offset
 
@@ -121,7 +137,5 @@ void open_bmp_file(const char filename[]) {
     create_bmp_image(bmp_header, dibHeader, bmp_image);
 
     free_bmp_image(bmp_image);
-
-
     fclose(file_pointer);
 }
