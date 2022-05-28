@@ -1,0 +1,9 @@
+# ninja log v5
+2	102	6754209295417724	CMakeFiles/dsa_project.dir/main.c.obj	9cdc6c758229c798
+2	110	6754206429252030	CMakeFiles/dsa_project.dir/bmp.c.obj	7487986e976a7bb3
+103	208	6754209296511553	dsa_project.exe	3260b6430bfc4062
+2	90	6754209901990842	CMakeFiles/dsa_project.dir/main.c.obj	9cdc6c758229c798
+91	197	6754209903084691	dsa_project.exe	3260b6430bfc4062
+92	320	6754210712795867	CMakeFiles/dsa_project.dir/main.c.obj	9cdc6c758229c798
+1	323	6754210712795867	CMakeFiles/dsa_project.dir/bmp.c.obj	7487986e976a7bb3
+323	512	6754210714670783	dsa_project.exe	3260b6430bfc4062
