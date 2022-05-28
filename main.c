@@ -8,7 +8,7 @@ int main(void){
 //    printf("Hello World!\n");
 //    printf("%u\n", sizeof(uint_fast32_t));
 
-    open_bmp_file("C:\\Users\\User\\Documents\\Other\\dsa L2\\dsa_project\\example.bmp");
+    open_bmp_file("C:\\Users\\User\\Documents\\Other\\dsa L2\\Automatic-brightness-and-contrast-of-BMP-image\\example.bmp");
 
     return 0;
 }
