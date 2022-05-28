@@ -45,7 +45,7 @@ void free_bmp_image(stImage *bmp_image) {
     free(bmp_image->ptr_to_rgb_row); // free array of rows
 }
 
-void create_bmp_image(stBITMAP_HEADER const *bmp_header, stDIB_HEADER const *dib_header, stImage const *bmp_image) {
+void create_bmp_image(const stBitMapFile * const bmpfile) {
     FILE *write_file_pointer = fopen("new_image.bmp", "wb");
     if (write_file_pointer == NULL) {
         puts("Error while creating bmp image");

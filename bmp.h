@@ -108,7 +108,7 @@ typedef struct BITMAP_FILE stBitMapFile;
 
 stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t height,
                        uint_fast32_t bytes_to_read, uint_fast32_t number_of_rgb);
-void create_bmp_image(stBITMAP_HEADER const *bmp_header, stDIB_HEADER const *dib_header, stImage const *bmp_image);
+void create_bmp_image(const stBitMapFile * const bmpfile);
 void free_bmp_image(stImage *bmp_image);
 stBitMapFile read_bmp_file(stBitMapFile *ptr_to_bmp, FILE *file_ptr);
 void open_bmp_file(const char filename[]);
