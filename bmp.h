@@ -42,9 +42,15 @@ struct BITMAP_HEADER {
 
 typedef struct BITMAP_HEADER stBITMAP_HEADER;
 
+
+/*
+ * This block of bytes tells the application detailed information about the image,
+ * which will be used to display the image on the screen.
+ * The block also matches the header used internally by Windows and OS/2.
+ */
 struct DIB_HEADER
 {
-    uint_fast32_t header_size;
+    uint_fast32_t header_size; // in bytes
     uint_fast32_t bmp_width;
     uint_fast32_t bmp_height;
     uint_fast16_t  color_planes; // note: 2 bytes
@@ -53,7 +59,7 @@ struct DIB_HEADER
     uint_fast32_t image_size;
 
     uint_fast32_t other[4]; // not used
-};
+} __attribute__((packed));
 
 typedef struct DIB_HEADER stDIB_HEADER;
 
