@@ -85,7 +85,7 @@ void create_bmp_image(const stBitMapFile *const bmpfile) {
 
     int32_t i;
     if (padding_size == 0) {
-        for (i = bmpfile->dib_header.height - 1; i >= 0; i--) {
+        for (i = bmpfile->dib_header.bmp_height - 1; i >= 0; i--) {
             // write number_of_rgb structures to the file
             fwrite(bmpfile->pixel_array.ptr_to_rgb_row[i], sizeof(stRGB), number_of_rgb, write_file_pointer);
         }
@@ -95,7 +95,7 @@ void create_bmp_image(const stBitMapFile *const bmpfile) {
             padding[i] = 0;
         }
 
-        for (i = bmpfile->dib_header.height - 1; i >= 0; i--) {
+        for (i = bmpfile->dib_header.bmp_height - 1; i >= 0; i--) {
 
             // write number_of_rgb structures to the file and add necessary paddin
             fwrite(bmpfile->pixel_array.ptr_to_rgb_row[i], sizeof(stRGB), number_of_rgb, write_file_pointer);
@@ -155,14 +155,14 @@ stBitMapFile read_bmp_file(stBitMapFile *ptr_to_bmp, FILE *file_ptr) {
     printf("number_of_rgb %u\n", number_of_rgb);
     printf("padding_size %u\n", padding_size);
     printf("space_between_dib_image %d\n", space_between_dib_image);
-    puts("-----------End create-----------------");
+    puts("-----------End read-----------------");
 
     if (space_between_dib_image > 0) {
         memcpy(&(ptr_to_bmp->unnecessary), file_ptr, space_between_dib_image);
     }
 
-    printf("%u and %x hex is *(ptr_to_bmp->unnecessary + 2)\n", *(ptr_to_bmp->unnecessary + 2),
-           *(ptr_to_bmp->unnecessary + 2));
+    printf("%u and %x hex is *(ptr_to_bmp->unnecessary + 2)\n", *(ptr_to_bmp->unnecessary + 17),
+           *(ptr_to_bmp->unnecessary + 17));
 
     fseek(file_ptr, ptr_to_bmp->bmp_header.image_offset, SEEK_SET);
     ptr_to_bmp->pixel_array = read_bmp_image(file_ptr, ptr_to_bmp->dib_header.bmp_width,
@@ -186,8 +186,8 @@ void open_bmp_file(const char filename[]) {
 
     stBitMapFile bmp_file;
     bmp_file = read_bmp_file(&bmp_file, file_pointer);
-    auto_adjusting(&bmp_file);
-
+//    auto_adjusting(&bmp_file);
+    create_bmp_image(&bmp_file);
 
     fseek(file_pointer, 0, SEEK_SET);
 

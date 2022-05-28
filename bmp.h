@@ -99,8 +99,8 @@ typedef struct Image stImage;
 struct BITMAP_FILE
 {
     stBITMAP_HEADER bmp_header;
-    uint_fast8_t *unnecessary;
     stDIB_HEADER dib_header;
+    uint_fast8_t *unnecessary;
     stImage pixel_array;
 } __attribute__((packed));
 
