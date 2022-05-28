@@ -189,7 +189,9 @@ void open_bmp_file(const char filename[]) {
 
 
     fseek(file_pointer, 0, SEEK_SET);
-    free(&(bmp_file.pixel_array));
+
+    free_bmp_image(&(bmp_file.pixel_array));
+
     fclose(file_pointer);
 }
 
