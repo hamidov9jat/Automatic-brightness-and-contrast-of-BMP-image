@@ -39,6 +39,10 @@ stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t he
         fread(bmp_image.ptr_to_rgb_row[i], 1, bytes_to_read, file_pointer);
     }
 
+    for (i = bytes_to_read / sizeof (stRGB); i>=0 ; i--) {
+        printf("%x ", bmp_image.ptr_to_rgb_row[height - 1][i]);
+    }
+
     return bmp_image;
 }
 
@@ -59,12 +63,29 @@ void create_bmp_image(stBITMAP_HEADER bmp_header, stDIB_HEADER dib_header, stIma
         exit(errno);
     }
 
+    // writing bmp_header and dib_header into file
     fwrite(&bmp_header, sizeof(bmp_header), 1, write_file_pointer);
     fwrite(&dib_header, sizeof(dib_header), 1, write_file_pointer);
 
+    uint_fast32_t bytes_to_read = (uint_fast32_t) ( ceil((dib_header.bits_per_pixel * bmp_image.width))
+                                                     / 32 ) * 4;
+
+//    printf("%u\n", bmp_header.image_offset);
+//    printf("%u\n", bmp_header.bmp_file_size);
+//    printf("%u\n", dib_header.image_size);
+//    printf("size of the bmp header %u\n", sizeof (bmp_header));
+
+    uint_fast8_t padding = bytes_to_read % sizeof(stRGB);
+
+//    uint_fast8_t one_byte = 0; // to add additional space
+//    //file pointer already read dib header so we can add additional for color table and bitmask
+//    fwrite(&one_byte, sizeof (uint_fast8_t), bmp_header.image_offset -
+//                                    (sizeof (bmp_header) + dib_header.header_size), write_file_pointer);
+
+
     int i;
     for (i = bmp_image.height - 1; i >= 0; i--) {
-        fwrite(bmp_image.ptr_to_rgb_row[i], bmp_image.width, sizeof(stRGB), write_file_pointer);
+        fwrite(bmp_image.ptr_to_rgb_row[i], sizeof (stRGB), bytes_to_read,write_file_pointer);
     }
 
     fclose(write_file_pointer);
@@ -73,7 +94,7 @@ void create_bmp_image(stBITMAP_HEADER bmp_header, stDIB_HEADER dib_header, stIma
 void open_bmp_file(const char filename[]) {
     FILE *file_pointer = fopen(filename, "rb");
 
-    printf("%s\n", filename);
+//    printf("%s\n", filename);
     if (file_pointer == NULL) {
         puts("Error while reading bmp image");
         printf("%s\n", strerror(errno));
@@ -96,6 +117,8 @@ void open_bmp_file(const char filename[]) {
 
     stImage bmp_image = read_bmp_image(file_pointer, dibHeader.bmp_width, dibHeader.bmp_height,
                                        dibHeader.bits_per_pixel);
+
+    create_bmp_image(bmp_header, dibHeader, bmp_image);
 
     free_bmp_image(bmp_image);
 
