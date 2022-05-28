@@ -89,4 +89,6 @@ struct Image
     stRGB* *rgb_rows; // rows (a 1D array) of 1D arrays, which contain pointers to structure
 };
 
+typedef struct Image stImage;
+
 void open_bmp_file(const char filename[]);
