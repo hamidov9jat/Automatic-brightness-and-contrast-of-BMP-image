@@ -74,21 +74,23 @@ struct RGB
     uint_fast8_t red;
     uint_fast8_t green;
     uint_fast8_t blue;
-};
+} __attribute__((packed));
 
 typedef struct RGB stRGB;
 
 /*
- * Store image as a 2D array. Each row will contain pointers to RGB structure.
+ * Bmp image will be a 2D array where each entry will be a pointer to rgb structure.
+ * Each row will contain pointers to RGB structure.
  * Also store image width and height
 */
 struct Image
 {
     uint_fast32_t width;
     uint_fast32_t height;
-    stRGB* *rgb_rows; // rows (a 1D array) of 1D arrays, which contain pointers to structure
-};
+    stRGB* *ptr_to_rgb_row; // row (1D array) of pointers to the rgb structure
+} __attribute__((packed));
 
 typedef struct Image stImage;
 
+stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t height);
 void open_bmp_file(const char filename[]);
