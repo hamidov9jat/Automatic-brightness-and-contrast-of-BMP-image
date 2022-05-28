@@ -17,11 +17,20 @@ stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t he
     // from the file (specified in wikipedia by a formula)
     uint_fast32_t bytes_to_read = (uint_fast32_t) ( ceil((bits_per_pixel * width)) / 32 ) * 4;
 
+    /*
+    printf("Bytes to read %u\n", bytes_to_read);
+    */
+
     // number of rgb structures in each row (integral division is used)
     uint_fast32_t number_of_rgb = bytes_to_read / sizeof(stRGB);
 
+    /*
+    printf("Size of rgb structure %u\n", sizeof(stRGB));
+    printf("number of Rgb: %u\n", number_of_rgb);
+    */
+
     // read image from bottom (i.e. i = height-1) to top
-    uint_fast32_t i;
+    int i;
     for (i = height - 1; i >= 0; i--) {
         // create 1D array on ith row
         bmp_image.ptr_to_rgb_row[i] = (stRGB *) malloc(number_of_rgb * sizeof(stRGB));
@@ -34,7 +43,7 @@ stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t he
 }
 
 void free_bmp_image(stImage bmp_image) {
-    uint_fast32_t i;
+    int i;
     for (i = bmp_image.height - 1; i >= 0; i--) {
         free(bmp_image.ptr_to_rgb_row[i]); // free ith row in bmp_image
     }
