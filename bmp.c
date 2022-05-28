@@ -45,7 +45,7 @@ void free_bmp_image(stImage *bmp_image) {
     free(bmp_image->ptr_to_rgb_row); // free array of rows
 }
 
-void create_bmp_image(const stBitMapFile * const bmpfile) {
+void create_bmp_image(const stBitMapFile *const bmpfile) {
     FILE *write_file_pointer = fopen("new_image.bmp", "wb");
     if (write_file_pointer == NULL) {
         puts("Error while creating bmp image");
@@ -54,20 +54,21 @@ void create_bmp_image(const stBitMapFile * const bmpfile) {
     }
 
     // writing bmp_header and dib_header into file
-    fwrite(bmp_header, sizeof(*bmp_header), 1, write_file_pointer);
-    fwrite(dib_header, sizeof(*dib_header), 1, write_file_pointer);
+    fwrite(&(bmpfile->bmp_header), sizeof(bmpfile->bmp_header), 1, write_file_pointer);
+    fwrite(&(bmpfile->dib_header), sizeof(bmpfile->dib_header), 1, write_file_pointer);
 
 
-    uint_fast32_t bytes_to_read = (uint_fast32_t) (ceil((dib_header->bits_per_pixel * bmp_image->width))
-                                                   / 32) * 4;
+    uint_fast32_t bytes_to_read =
+            (uint_fast32_t)(ceil((bmpfile->dib_header.bits_per_pixel * bmpfile->dib_header.bmp_width))
+                            / 32) * 4;
     uint_fast32_t number_of_rgb = bytes_to_read / sizeof(stRGB);
     uint_fast8_t padding_size = bytes_to_read % sizeof(stRGB);
-    int32_t space_between_dib_image = bmp_header->image_offset - (sizeof(*bmp_header) + sizeof(*dib_header));
+    int32_t space_between_dib_image = sizeof(bmpfile->unnecessary);
 
     puts("------------Inside create----------");
     printf("bytes_to_read %u\n", bytes_to_read);
     printf("number_of_rgb %u\n", number_of_rgb);
-    printf("padding_size %u\n", padding_size);
+    printf("padding_size %d\n", padding_size);
     printf("space_between_dib_image %d\n", space_between_dib_image);
     puts("-----------End create-----------------");
 
@@ -82,11 +83,11 @@ void create_bmp_image(const stBitMapFile * const bmpfile) {
     }
 
 
-    int i;
+    int32_t i;
     if (padding_size == 0) {
-        for (i = bmp_image->height - 1; i >= 0; i--) {
+        for (i = bmpfile->dib_header.height - 1; i >= 0; i--) {
             // write number_of_rgb structures to the file
-            fwrite(bmp_image->ptr_to_rgb_row[i], sizeof(stRGB), number_of_rgb, write_file_pointer);
+            fwrite(bmpfile->pixel_array.ptr_to_rgb_row[i], sizeof(stRGB), number_of_rgb, write_file_pointer);
         }
     } else { // take into account padding
         uint_fast8_t padding[padding_size];// padding number of zeros
@@ -94,10 +95,10 @@ void create_bmp_image(const stBitMapFile * const bmpfile) {
             padding[i] = 0;
         }
 
-        for (i = bmp_image->height - 1; i >= 0; i--) {
+        for (i = bmpfile->dib_header.height - 1; i >= 0; i--) {
 
             // write number_of_rgb structures to the file and add necessary paddin
-            fwrite(bmp_image->ptr_to_rgb_row[i], sizeof(stRGB), number_of_rgb, write_file_pointer);
+            fwrite(bmpfile->pixel_array.ptr_to_rgb_row[i], sizeof(stRGB), number_of_rgb, write_file_pointer);
             fwrite(padding, sizeof(uint_fast8_t), padding_size, write_file_pointer);
         }
     }
