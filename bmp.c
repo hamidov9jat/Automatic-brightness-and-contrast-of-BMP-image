@@ -45,7 +45,7 @@ void free_bmp_image(stImage *bmp_image) {
     free(bmp_image->ptr_to_rgb_row); // free array of rows
 }
 
-void create_bmp_image(const stBitMapFile *const bmpfile) {
+void create_bmp_image(const stBitMapFile * const bmpfile) {
     FILE *write_file_pointer = fopen("new_image.bmp", "wb");
     if (write_file_pointer == NULL) {
         puts("Error while creating bmp image");
@@ -56,6 +56,7 @@ void create_bmp_image(const stBitMapFile *const bmpfile) {
     // writing bmp_header and dib_header into file
     fwrite(&(bmpfile->bmp_header), sizeof(bmpfile->bmp_header), 1, write_file_pointer);
     fwrite(&(bmpfile->dib_header), sizeof(bmpfile->dib_header), 1, write_file_pointer);
+    fwrite(&(bmpfile->unnecessary), sizeof(bmpfile->unnecessary), 1, write_file_pointer);
 
 
     uint_fast32_t bytes_to_read =
@@ -72,15 +73,6 @@ void create_bmp_image(const stBitMapFile *const bmpfile) {
     printf("space_between_dib_image %d\n", space_between_dib_image);
     puts("-----------End create-----------------");
 
-
-    // add zeros between part of dib header and pixel array
-    if (space_between_dib_image > 0) {
-        uint_fast8_t zeros[space_between_dib_image];
-        for (uint_fast32_t i = 0; i < space_between_dib_image; i++) {
-            zeros[i] = 0;
-        }
-        fwrite(zeros, sizeof(uint_fast8_t), space_between_dib_image, write_file_pointer);
-    }
 
 
     int32_t i;
@@ -157,10 +149,12 @@ stBitMapFile read_bmp_file(stBitMapFile *ptr_to_bmp, FILE *file_ptr) {
     printf("space_between_dib_image %d\n", space_between_dib_image);
     puts("-----------End read-----------------");
 
+    fseek(file_ptr, ptr_to_bmp->bmp_header.image_offset - space_between_dib_image, SEEK_SET);
     if (space_between_dib_image > 0) {
         memcpy(&(ptr_to_bmp->unnecessary), file_ptr, space_between_dib_image);
     }
 
+    printf("sizeof(ptr_to_bmp->unnecessary): %u\n", sizeof(ptr_to_bmp->unnecessary));
     printf("%u and %x hex is *(ptr_to_bmp->unnecessary + 2)\n", *(ptr_to_bmp->unnecessary + 17),
            *(ptr_to_bmp->unnecessary + 17));
 
