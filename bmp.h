@@ -78,4 +78,15 @@ struct RGB
 
 typedef struct RGB stRGB;
 
+/*
+ * Store image as a 2D array. Each row will contain pointers to RGB structure.
+ * Also store image width and height
+*/
+struct Image
+{
+    uint_fast32_t width;
+    uint_fast32_t height;
+    stRGB* *rgb_rows; // rows (a 1D array) of 1D arrays, which contain pointers to structure
+};
+
 void open_bmp_file(const char filename[]);
