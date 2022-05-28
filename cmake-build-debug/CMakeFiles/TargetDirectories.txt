@@ -1,3 +1,3 @@
-C:/Users/User/Documents/Other/dsa L2/dsa_project/cmake-build-debug/CMakeFiles/dsa_project.dir
-C:/Users/User/Documents/Other/dsa L2/dsa_project/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/User/Documents/Other/dsa L2/dsa_project/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/User/Documents/Other/dsa L2/Automatic-brightness-and-contrast-of-BMP-image/cmake-build-debug/CMakeFiles/dsa_project.dir
+C:/Users/User/Documents/Other/dsa L2/Automatic-brightness-and-contrast-of-BMP-image/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/User/Documents/Other/dsa L2/Automatic-brightness-and-contrast-of-BMP-image/cmake-build-debug/CMakeFiles/rebuild_cache.dir
