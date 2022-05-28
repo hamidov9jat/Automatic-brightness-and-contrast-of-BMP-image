@@ -24,6 +24,10 @@ void open_bmp_file(const char filename[]) {
     // file pointer is on top of the dib_header since we are using structure packing
     fread(&dibHeader, sizeof(dibHeader), 1, file_pointer);
 
+    // move file pointer to the first byte where the image starts
+    fseek(file_pointer, bmp_header.image_offset, SEEK_SET); // from the begging + image_offset
+
+
 
     fclose(file_pointer);
 }

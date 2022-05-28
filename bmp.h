@@ -63,4 +63,19 @@ struct DIB_HEADER
 
 typedef struct DIB_HEADER stDIB_HEADER;
 
+/*
+ * The 32-bit per pixel (32bpp) format supports 4,294,967,296
+ * distinct colors and stores 1 pixel per 4-byte DWORD.
+ * Each DWORD can define the alpha, red, green and blue samples of the pixel.
+ * */
+struct RGB
+{
+    uint_fast8_t alpha;
+    uint_fast8_t red;
+    uint_fast8_t green;
+    uint_fast8_t blue;
+};
+
+typedef struct RGB stRGB;
+
 void open_bmp_file(const char filename[]);
