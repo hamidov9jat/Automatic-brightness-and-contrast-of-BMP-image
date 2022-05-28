@@ -4,7 +4,7 @@
 
 #include "bmp.h"
 
-stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t height, stDIB_HEADER &) {
+stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t height, stDIB_HEADER *dib_header) {
 
     stImage bmp_image;
     bmp_image.width = width;
@@ -13,8 +13,21 @@ stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t he
     // create 1D array each element of which will be a pointer to another 1D array of rgb stucture pointers
     bmp_image.ptr_to_rgb_row = (stRGB **) malloc(height * sizeof(stRGB *));
 
+    // In order to take into account padding in the bmp file we read appropriate number of bytes
+    // from the file (specified in wikipedia by a formula)
+    uint_fast32_t bytes_to_read = (uint_fast32_t) (ceil((dib_header->bits_per_pixel * dib_header->bmp_width)) / 32
+                                                    ) * 4;
 
+    // number of rgb structures in each row (integral division is used)
+    uint_fast32_t number_of_rgb = bytes_to_read / sizeof(stRGB);
 
+    uint_fast32_t i;
+    for (i = height - 1; i >= 0; i--) {
+        bmp_image.ptr_to_rgb_row[i] = (stRGB *) malloc(number_of_rgb * sizeof(stRGB));
+        fread(bmp_image.ptr_to_rgb_row[i], 1, bytes_to_read, file_pointer);
+    }
+
+    return bmp_image;
 }
 
 void open_bmp_file(const char filename[]) {

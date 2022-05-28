@@ -9,7 +9,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <inttypes.h>
-#include "stdlib.h"
+#include <stdlib.h>
+#include <math.h>
 #endif //DSA_PROJECT_BMP_H
 
 /* WARNING!!! Using C99 standard of C!
@@ -92,5 +93,5 @@ struct Image
 
 typedef struct Image stImage;
 
-stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t height);
+stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t height, stDIB_HEADER *dibHeader);
 void open_bmp_file(const char filename[]);
