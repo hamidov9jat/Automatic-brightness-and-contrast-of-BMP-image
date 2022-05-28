@@ -4,7 +4,7 @@
 
 #include "bmp.h"
 
-stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t height, uint_fast16_t bits_per_pixel,
+stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t height,
                        uint_fast32_t bytes_to_read, uint_fast32_t number_of_rgb) {
 
     stImage bmp_image;
@@ -13,6 +13,8 @@ stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t he
 
     // create 1D array each element of which will be a pointer to another 1D array of rgb structure pointers
     bmp_image.ptr_to_rgb_row = (stRGB **) malloc(height * sizeof(stRGB *)); // array of rows
+
+
 
 
     // read image from bottom (i.e. i = height-1) to top
@@ -155,16 +157,15 @@ stBitMapFile read_bmp_file(stBitMapFile *ptr_to_bmp, FILE *file_ptr) {
     puts("-----------End create-----------------");
 
     if (space_between_dib_image > 0) {
-        memcpy(&(ptr_to_bmp->uneccessary), file_ptr, space_between_dib_image);
+        memcpy(&(ptr_to_bmp->unnecessary), file_ptr, space_between_dib_image);
     }
 
-    printf("%u and %x hex is *(ptr_to_bmp->uneccessary + 2)\n", *(ptr_to_bmp->uneccessary + 2),
-           *(ptr_to_bmp->uneccessary + 2));
+    printf("%u and %x hex is *(ptr_to_bmp->unnecessary + 2)\n", *(ptr_to_bmp->unnecessary + 2),
+           *(ptr_to_bmp->unnecessary + 2));
 
     fseek(file_ptr, ptr_to_bmp->bmp_header.image_offset, SEEK_SET);
     ptr_to_bmp->pixel_array = read_bmp_image(file_ptr, ptr_to_bmp->dib_header.bmp_width,
                                              ptr_to_bmp->dib_header.bmp_height,
-                                             ptr_to_bmp->dib_header.bits_per_pixel,
                                              bytes_to_read, number_of_rgb);
 
 
@@ -181,15 +182,13 @@ void open_bmp_file(const char filename[]) {
         exit(errno);
     }
 
-    stBITMAP_HEADER bmp_header;
-    stDIB_HEADER dibHeader;
-
 
     stBitMapFile bmp_file;
     bmp_file = read_bmp_file(&bmp_file, file_pointer);
     auto_adjusting(&bmp_file);
-    
 
+
+    fseek(file_pointer, 0, SEEK_SET);
     free(&(bmp_file.pixel_array));
     fclose(file_pointer);
 }
