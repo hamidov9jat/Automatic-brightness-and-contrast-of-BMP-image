@@ -13,7 +13,8 @@ void open_bmp_file(const char filename[]) {
         exit(2);
     }
 
-    sBITMAP_HEADER bmp_header;
+    stBITMAP_HEADER bmp_header;
+    stDIB_HEADER dibHeader;
 
 //    printf("size of bmp header %u\n", sizeof(bmp_header)); // checking the size of bmp header
 

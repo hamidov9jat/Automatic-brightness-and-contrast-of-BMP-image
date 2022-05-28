@@ -40,7 +40,7 @@ struct BITMAP_HEADER {
     uint_fast32_t image_offset; // starting address of the byte where the bitmap image starts
 } __attribute__((packed));
 
-typedef struct BITMAP_HEADER sBITMAP_HEADER;
+typedef struct BITMAP_HEADER stBITMAP_HEADER;
 
 struct DIB_HEADER
 {
@@ -54,5 +54,7 @@ struct DIB_HEADER
 
     uint_fast32_t other[4]; // not used
 };
+
+typedef struct DIB_HEADER stDIB_HEADER;
 
 void open_bmp_file(const char filename[]);
