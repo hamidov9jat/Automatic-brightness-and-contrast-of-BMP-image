@@ -15,7 +15,7 @@ stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t he
 
     // In order to take into account padding in the bmp file we read appropriate number of bytes
     // from the file (specified in wikipedia by a formula)
-    uint_fast32_t bytes_to_read = (uint_fast32_t) ( ceil((bits_per_pixel * width)) / 32 ) * 4;
+    uint_fast32_t bytes_to_read = (uint_fast32_t) (ceil((bits_per_pixel * width)) / 32) * 4;
 
     /*
     printf("Bytes to read %u\n", bytes_to_read);
@@ -51,13 +51,33 @@ void free_bmp_image(stImage bmp_image) {
     free(bmp_image.ptr_to_rgb_row); // free array of rows
 }
 
+void create_bmp_image(stBITMAP_HEADER bmp_header, stDIB_HEADER dib_header, stImage bmp_image) {
+    FILE *write_file_pointer = fopen("new.bmp", "wb");
+    if (write_file_pointer == NULL) {
+        puts("Error while creating bmp image");
+        printf("%s\n", strerror(errno));
+        exit(errno);
+    }
+
+    fwrite(&bmp_header, sizeof(bmp_header), 1, write_file_pointer);
+    fwrite(&dib_header, sizeof(dib_header), 1, write_file_pointer);
+
+    int i;
+    for (i = bmp_image.height; i >= 0; i--) {
+        fwrite(bmp_image.ptr_to_rgb_row[i], bmp_image.width, sizeof(stRGB), write_file_pointer);
+    }
+
+    fclose(write_file_pointer);
+}
+
 void open_bmp_file(const char filename[]) {
     FILE *file_pointer = fopen(filename, "rb");
 
     printf("%s\n", filename);
     if (file_pointer == NULL) {
+        puts("Error while reading bmp image");
         printf("%s\n", strerror(errno));
-        exit(2);
+        exit(errno);
     }
 
     stBITMAP_HEADER bmp_header;
