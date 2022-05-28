@@ -17,7 +17,7 @@
  * Using structure packing technique instead of
  * structure padding in order to eliminate wastage of
  * memory, although there will be wastage of CPU cycles
- * which is not primary concern in out cases.
+ * which is not primary concern in out case.
  *
  * If the attribute((packed)) doesn't work,
  * instead you can include #pragma pack(1) directive
@@ -27,7 +27,8 @@
  *  Fastest minimum-width integer types
  *  Not actually guaranteed to be fastest for all purposes
  *  Here we use the exact-width types for 8 and 16-bit ints.
- *
+ *  Basically, in comparison with uint_t, uint_fast32_t
+ *  will try to take 4 bytes on someone's machine.
  * */
 
 
@@ -56,10 +57,11 @@ struct DIB_HEADER
     uint_fast32_t bmp_height;
     uint_fast16_t  color_planes; // note: 2 bytes
     uint_fast16_t bits_per_pixel; // note: 2 bytes
-    uint_fast32_t compression_method;
+    uint_fast32_t compression_method_type; // and int indicating compression method (check wikipedia_
     uint_fast32_t image_size;
 
-    uint_fast32_t other[4]; // not used
+    uint_fast32_t additional[4]; // not used
+    uint_fast32_t compression_method[6]; // not used in code
 } __attribute__((packed));
 
 typedef struct DIB_HEADER stDIB_HEADER;

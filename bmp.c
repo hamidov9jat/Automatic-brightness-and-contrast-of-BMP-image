@@ -24,10 +24,8 @@ stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t he
     // number of rgb structures in each row (integral division is used)
     uint_fast32_t number_of_rgb = bytes_to_read / sizeof(stRGB);
 
-    /*
     printf("Size of rgb structure %u\n", sizeof(stRGB));
     printf("number of Rgb: %u\n", number_of_rgb);
-    */
 
     // read image from bottom (i.e. i = height-1) to top
     int i;
@@ -39,9 +37,11 @@ stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t he
         fread(bmp_image.ptr_to_rgb_row[i], 1, bytes_to_read, file_pointer);
     }
 
-    for (i = bytes_to_read / sizeof (stRGB); i>=0 ; i--) {
-        printf("%x ", bmp_image.ptr_to_rgb_row[height - 1][i]);
-    }
+/* check
+    for (i = 0; i<number_of_rgb ; i++) {
+        stRGB pixel = bmp_image.ptr_to_rgb_row[height - 1][i];
+        printf("Alpha:%d,Red:%d,Green:%d,Blue:%d\n", pixel.alpha, pixel.red, pixel.green, pixel.blue);
+    }*/
 
     return bmp_image;
 }
@@ -67,26 +67,59 @@ void create_bmp_image(stBITMAP_HEADER bmp_header, stDIB_HEADER dib_header, stIma
     fwrite(&bmp_header, sizeof(bmp_header), 1, write_file_pointer);
     fwrite(&dib_header, sizeof(dib_header), 1, write_file_pointer);
 
-    uint_fast32_t bytes_to_read = (uint_fast32_t) ( ceil((dib_header.bits_per_pixel * bmp_image.width))
-                                                     / 32 ) * 4;
+    printf("IN create\n");
+    printf("bmp_header.image_offset %u\n", bmp_header.image_offset);
+    printf("bmp_header.file_size %u\n", bmp_header.file_size);
+    printf("dib_header.image_size %u\n", dib_header.image_size);
+    printf("dib_header.header_size %u\n", dib_header.header_size);
 
-//    printf("%u\n", bmp_header.image_offset);
-//    printf("%u\n", bmp_header.bmp_file_size);
-//    printf("%u\n", dib_header.image_size);
-//    printf("size of the bmp header %u\n", sizeof (bmp_header));
+    printf("sizeof (bmp_header) %u\n", sizeof (bmp_header));
+    printf("sizeof (dib_header) %u\n", sizeof (dib_header));
 
-    uint_fast8_t padding = bytes_to_read % sizeof(stRGB);
+    uint_fast32_t bytes_to_read = (uint_fast32_t) (ceil((dib_header.bits_per_pixel * bmp_image.width))
+                                                   / 32) * 4;
 
-//    uint_fast8_t one_byte = 0; // to add additional space
-//    //file pointer already read dib header so we can add additional for color table and bitmask
-//    fwrite(&one_byte, sizeof (uint_fast8_t), bmp_header.image_offset -
-//                                    (sizeof (bmp_header) + dib_header.header_size), write_file_pointer);
+    uint_fast32_t number_of_rgb = bytes_to_read / sizeof(stRGB);
+    uint_fast8_t padding_size = bytes_to_read % sizeof(stRGB);
+    printf("padding_size %u\n", padding_size);
+
+    int32_t space_between_dib_image = bmp_header.image_offset - (sizeof(bmp_header) + sizeof (dib_header));
+
+    printf("Space between %d\n", space_between_dib_image);
+
+    // add zeros between part of dib header and pixel array
+    if (space_between_dib_image > 0) {
+        uint_fast8_t zeros[space_between_dib_image];
+        for (uint_fast32_t i = 0; i < space_between_dib_image; i++) {
+            zeros[i] = 0;
+        }
+
+        fwrite(zeros, sizeof (uint_fast8_t), space_between_dib_image, write_file_pointer);
+    }
+
+
 
 
     int i;
-    for (i = bmp_image.height - 1; i >= 0; i--) {
-        fwrite(bmp_image.ptr_to_rgb_row[i], sizeof (stRGB), bytes_to_read,write_file_pointer);
+    if (padding_size == 0) {
+        for (i = bmp_image.height - 1; i >= 0; i--) {
+            // write number_of_rgb structures to the file
+            fwrite(bmp_image.ptr_to_rgb_row[i], sizeof(stRGB), number_of_rgb, write_file_pointer);
+        }
+    } else { // take into account padding
+        uint_fast8_t padding[padding_size];// padding number of zeros
+        for (i = 0; i < padding_size; i++) {
+            padding[i] = 0;
+        }
+
+        for (i = bmp_image.height - 1; i >= 0; i--) {
+
+            // write number_of_rgb structures to the file and add necessary paddin
+            fwrite(bmp_image.ptr_to_rgb_row[i], sizeof(stRGB), number_of_rgb, write_file_pointer);
+            fwrite(padding, sizeof(uint_fast8_t), padding_size, write_file_pointer);
+        }
     }
+
 
     fclose(write_file_pointer);
 }
@@ -94,7 +127,6 @@ void create_bmp_image(stBITMAP_HEADER bmp_header, stDIB_HEADER dib_header, stIma
 void open_bmp_file(const char filename[]) {
     FILE *file_pointer = fopen(filename, "rb");
 
-//    printf("%s\n", filename);
     if (file_pointer == NULL) {
         puts("Error while reading bmp image");
         printf("%s\n", strerror(errno));
@@ -117,16 +149,19 @@ void open_bmp_file(const char filename[]) {
     printf("width size %u\n", dibHeader.bmp_width);
     printf("height size %u\n", dibHeader.bmp_height);
     printf("Image size %u\n", dibHeader.image_size);
-    printf("Image size %u\n", dibHeader.image_size);
+    printf("Compression method size %u\n", dibHeader.compression_method_type);
+    printf("Image offset %x and %u in dec\n", bmp_header.image_offset, bmp_header.image_offset);
+
     puts("--------------");
     printf("header size %x\n", dibHeader.header_size);
     printf("width size %x\n", dibHeader.bmp_width);
     printf("height size %x\n", dibHeader.bmp_height);
     printf("Image size %x\n", dibHeader.image_size);
-//    printf("%x\n", dibHeader.other[0]);
-//    printf("%x\n", dibHeader.other[1]);
-//    printf("%x\n", dibHeader.other[2]);
-//    printf("%x\n", dibHeader.other[3]);
+    printf("%u\n", dibHeader.additional[0]);
+    printf("%u\n", dibHeader.additional[1]);
+    printf("%u\n", dibHeader.additional[2]);
+    printf("%u\n", dibHeader.additional[3]);
+    puts("");
 
     // move file pointer to the first byte where the image starts
     fseek(file_pointer, bmp_header.image_offset, SEEK_SET); // from the begging + image_offset
