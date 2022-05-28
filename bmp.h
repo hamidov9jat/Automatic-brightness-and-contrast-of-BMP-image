@@ -21,4 +21,4 @@ struct BITMAP_HEADER {
 
 typedef struct BITMAP_HEADER sBITMAP_HEADER;
 
-void open_bmp_file();
+void open_bmp_file(const char filename[]);

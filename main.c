@@ -8,17 +8,7 @@ int main(void){
 //    printf("Hello World!\n");
 //    printf("%u\n", sizeof(uint_fast32_t));
 
-    FILE *file_pointer = fopen64("example.bmp", "rb");
-
-    if (file_pointer == NULL) {
-        puts("Error while opening the file");
-        printf("%d\n", errno);
-        printf("%s\n", strerror(errno));
-        exit(1);
-    }
-
-
-    fclose(file_pointer);
+    open_bmp_file("C:\\Users\\User\\Documents\\Other\\dsa L2\\dsa_project\\example.bmp");
 
     return 0;
 }

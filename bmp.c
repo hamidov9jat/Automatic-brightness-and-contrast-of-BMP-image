@@ -4,8 +4,8 @@
 
 #include "bmp.h"
 
-void open_bmp_file() {
-    FILE *file_pointer = fopen("example.bmp", "rb");
+void open_bmp_file(const char filename[]) {
+    FILE *file_pointer = fopen(filename, "rb");
 
     if (file_pointer == NULL) {
         puts("Error while opening the file");
