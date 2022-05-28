@@ -12,6 +12,12 @@
 #include "stdlib.h"
 #endif //DSA_PROJECT_BMP_H
 
+/*
+ * Using structure packing technique instead of
+ * structure padding in order to eliminate wastage of
+ * memory, although there will be wastage of CPU cycles
+ * which is not primary concern in out cases.
+ * */
 struct BITMAP_HEADER {
     uint_fast8_t header_field[2]; // for 'B' and 'M'
     uint_fast32_t header_size; // size of the bmp header
