@@ -63,7 +63,7 @@ void create_bmp_image(stBITMAP_HEADER bmp_header, stDIB_HEADER dib_header, stIma
     fwrite(&dib_header, sizeof(dib_header), 1, write_file_pointer);
 
     int i;
-    for (i = bmp_image.height; i >= 0; i--) {
+    for (i = bmp_image.height - 1; i >= 0; i--) {
         fwrite(bmp_image.ptr_to_rgb_row[i], bmp_image.width, sizeof(stRGB), write_file_pointer);
     }
 
