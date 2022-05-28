@@ -4,7 +4,7 @@
 
 #include "bmp.h"
 
-stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t height, stDIB_HEADER *dib_header) {
+stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t height, uint_fast16_t bits_per_pixel) {
 
     stImage bmp_image;
     bmp_image.width = width;
@@ -15,8 +15,7 @@ stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t he
 
     // In order to take into account padding in the bmp file we read appropriate number of bytes
     // from the file (specified in wikipedia by a formula)
-    uint_fast32_t bytes_to_read = (uint_fast32_t) (ceil((dib_header->bits_per_pixel * dib_header->bmp_width)) / 32
-    ) * 4;
+    uint_fast32_t bytes_to_read = (uint_fast32_t) ( ceil((bits_per_pixel * width)) / 32 ) * 4;
 
     // number of rgb structures in each row (integral division is used)
     uint_fast32_t number_of_rgb = bytes_to_read / sizeof(stRGB);
@@ -66,6 +65,10 @@ void open_bmp_file(const char filename[]) {
     // move file pointer to the first byte where the image starts
     fseek(file_pointer, bmp_header.image_offset, SEEK_SET); // from the begging + image_offset
 
+    stImage bmp_image = read_bmp_image(file_pointer, dibHeader.bmp_width, dibHeader.bmp_height,
+                                       dibHeader.bits_per_pixel);
+
+    free_bmp_image(bmp_image);
 
 
     fclose(file_pointer);

@@ -94,6 +94,6 @@ struct Image
 
 typedef struct Image stImage;
 
-stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t height, stDIB_HEADER *dibHeader);
+stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t height, uint_fast16_t bits_per_pixel);
 void free_bmp_image(stImage bmp_image);
 void open_bmp_file(const char filename[]);
