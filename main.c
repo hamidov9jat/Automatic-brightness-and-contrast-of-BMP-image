@@ -8,8 +8,8 @@
 int main(int argc, char **argv){
 
 
-    printf("res : %d\n", isBpm("hello.bmp"));
-    printf("res : %d\n", isBpm("hello.png"));
+    printf("res : %d\n", isBpm("help.bmp"));
+    printf("res : %d\n", isBpm("help.png"));
 
 
     return 0;
