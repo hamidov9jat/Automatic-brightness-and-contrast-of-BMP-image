@@ -8,5 +8,6 @@ int main(){
 
     open_bmp_file("C:\\Users\\User\\Documents\\Other\\dsa L2\\Automatic-brightness-and-contrast-of-BMP-image\\sampleview.bmp");
 
+
     return 0;
 }

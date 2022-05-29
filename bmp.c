@@ -3,7 +3,7 @@
 //
 
 #include "bmp.h"
-
+//#define CHECK
 
 stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t height,
                        uint_fast32_t bytes_to_read, uint_fast32_t number_of_rgb) {
@@ -32,7 +32,7 @@ stImage read_bmp_image(FILE *file_pointer, uint_fast32_t width, uint_fast32_t he
     for (i = 0; i<number_of_rgb ; i++) {
         stRGB pixel = bmp_image.ptr_to_rgb_row[height - 1][i];
         printf("Alpha:%d,Red:%d,Green:%d,Blue:%d\n", pixel.alpha, pixel.red, pixel.green, pixel.blue);
-    }*/
+    }
 #endif
 
     return bmp_image;
