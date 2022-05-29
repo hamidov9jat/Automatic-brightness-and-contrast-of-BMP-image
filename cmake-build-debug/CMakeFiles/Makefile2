@@ -62,7 +62,7 @@ CMAKE_BINARY_DIR = "C:\Users\User\Documents\Other\dsa L2\Automatic-brightness-an
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/dsa_project.dir/all
+all: CMakeFiles/autoadjust.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -70,34 +70,34 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/dsa_project.dir/clean
+clean: CMakeFiles/autoadjust.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/dsa_project.dir
+# Target rules for target CMakeFiles/autoadjust.dir
 
 # All Build rule for target.
-CMakeFiles/dsa_project.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="C:\Users\User\Documents\Other\dsa L2\Automatic-brightness-and-contrast-of-BMP-image\cmake-build-debug\CMakeFiles" --progress-num=1,2,3,4 "Built target dsa_project"
-.PHONY : CMakeFiles/dsa_project.dir/all
+CMakeFiles/autoadjust.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\autoadjust.dir\build.make CMakeFiles/autoadjust.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\autoadjust.dir\build.make CMakeFiles/autoadjust.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="C:\Users\User\Documents\Other\dsa L2\Automatic-brightness-and-contrast-of-BMP-image\cmake-build-debug\CMakeFiles" --progress-num=1,2,3,4 "Built target autoadjust"
+.PHONY : CMakeFiles/autoadjust.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/dsa_project.dir/rule: cmake_check_build_system
+CMakeFiles/autoadjust.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\User\Documents\Other\dsa L2\Automatic-brightness-and-contrast-of-BMP-image\cmake-build-debug\CMakeFiles" 4
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/dsa_project.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/autoadjust.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\User\Documents\Other\dsa L2\Automatic-brightness-and-contrast-of-BMP-image\cmake-build-debug\CMakeFiles" 0
-.PHONY : CMakeFiles/dsa_project.dir/rule
+.PHONY : CMakeFiles/autoadjust.dir/rule
 
 # Convenience name for target.
-dsa_project: CMakeFiles/dsa_project.dir/rule
-.PHONY : dsa_project
+autoadjust: CMakeFiles/autoadjust.dir/rule
+.PHONY : autoadjust
 
 # clean rule for target.
-CMakeFiles/dsa_project.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/clean
-.PHONY : CMakeFiles/dsa_project.dir/clean
+CMakeFiles/autoadjust.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\autoadjust.dir\build.make CMakeFiles/autoadjust.dir/clean
+.PHONY : CMakeFiles/autoadjust.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

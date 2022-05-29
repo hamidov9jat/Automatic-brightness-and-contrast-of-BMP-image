@@ -3,5 +3,5 @@ project(dsa_project C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(dsa_project
+add_executable(autoadjust
         main.c bmp.c bmp.h helper_functions.c helper_functions.h)

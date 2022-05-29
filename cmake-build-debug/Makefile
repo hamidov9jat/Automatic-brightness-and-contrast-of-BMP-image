@@ -116,24 +116,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named dsa_project
+# Target rules for targets named autoadjust
 
 # Build rule for target.
-dsa_project: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 dsa_project
-.PHONY : dsa_project
+autoadjust: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 autoadjust
+.PHONY : autoadjust
 
 # fast build rule for target.
-dsa_project/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/build
-.PHONY : dsa_project/fast
+autoadjust/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\autoadjust.dir\build.make CMakeFiles/autoadjust.dir/build
+.PHONY : autoadjust/fast
 
 bmp.obj: bmp.c.obj
 .PHONY : bmp.obj
 
 # target to build an object file
 bmp.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/bmp.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\autoadjust.dir\build.make CMakeFiles/autoadjust.dir/bmp.c.obj
 .PHONY : bmp.c.obj
 
 bmp.i: bmp.c.i
@@ -141,7 +141,7 @@ bmp.i: bmp.c.i
 
 # target to preprocess a source file
 bmp.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/bmp.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\autoadjust.dir\build.make CMakeFiles/autoadjust.dir/bmp.c.i
 .PHONY : bmp.c.i
 
 bmp.s: bmp.c.s
@@ -149,7 +149,7 @@ bmp.s: bmp.c.s
 
 # target to generate assembly for a file
 bmp.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/bmp.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\autoadjust.dir\build.make CMakeFiles/autoadjust.dir/bmp.c.s
 .PHONY : bmp.c.s
 
 helper_functions.obj: helper_functions.c.obj
@@ -157,7 +157,7 @@ helper_functions.obj: helper_functions.c.obj
 
 # target to build an object file
 helper_functions.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/helper_functions.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\autoadjust.dir\build.make CMakeFiles/autoadjust.dir/helper_functions.c.obj
 .PHONY : helper_functions.c.obj
 
 helper_functions.i: helper_functions.c.i
@@ -165,7 +165,7 @@ helper_functions.i: helper_functions.c.i
 
 # target to preprocess a source file
 helper_functions.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/helper_functions.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\autoadjust.dir\build.make CMakeFiles/autoadjust.dir/helper_functions.c.i
 .PHONY : helper_functions.c.i
 
 helper_functions.s: helper_functions.c.s
@@ -173,7 +173,7 @@ helper_functions.s: helper_functions.c.s
 
 # target to generate assembly for a file
 helper_functions.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/helper_functions.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\autoadjust.dir\build.make CMakeFiles/autoadjust.dir/helper_functions.c.s
 .PHONY : helper_functions.c.s
 
 main.obj: main.c.obj
@@ -181,7 +181,7 @@ main.obj: main.c.obj
 
 # target to build an object file
 main.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/main.c.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\autoadjust.dir\build.make CMakeFiles/autoadjust.dir/main.c.obj
 .PHONY : main.c.obj
 
 main.i: main.c.i
@@ -189,7 +189,7 @@ main.i: main.c.i
 
 # target to preprocess a source file
 main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/main.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\autoadjust.dir\build.make CMakeFiles/autoadjust.dir/main.c.i
 .PHONY : main.c.i
 
 main.s: main.c.s
@@ -197,7 +197,7 @@ main.s: main.c.s
 
 # target to generate assembly for a file
 main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/main.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\autoadjust.dir\build.make CMakeFiles/autoadjust.dir/main.c.s
 .PHONY : main.c.s
 
 # Help Target
@@ -208,7 +208,7 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... dsa_project
+	@echo ... autoadjust
 	@echo ... bmp.obj
 	@echo ... bmp.i
 	@echo ... bmp.s
