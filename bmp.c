@@ -151,10 +151,11 @@ stBitMapFile read_bmp_file(stBitMapFile *ptr_to_bmp, FILE *file_ptr) {
     printf("ptr_to_bmp->space_between_dib_and_pixel_array %d\n", ptr_to_bmp->space_between_dib_and_pixel_array);
     puts("-----------End read-----------------");
 
-    fseek(file_ptr, sizeof (ptr_to_bmp->bmp_header) + sizeof (ptr_to_bmp->dib_header), SEEK_SET);
+    fseek(file_ptr, sizeof(ptr_to_bmp->bmp_header) + sizeof(ptr_to_bmp->dib_header), SEEK_SET);
     if (ptr_to_bmp->space_between_dib_and_pixel_array > 0) {
-        ptr_to_bmp->unnecessary = (uint_fast8_t *) malloc(ptr_to_bmp->space_between_dib_and_pixel_array * sizeof (uint_fast8_t));
-        fread(ptr_to_bmp->unnecessary,sizeof (uint_fast8_t), ptr_to_bmp->space_between_dib_and_pixel_array, file_ptr);
+        ptr_to_bmp->unnecessary = (uint_fast8_t *) malloc(
+                ptr_to_bmp->space_between_dib_and_pixel_array * sizeof(uint_fast8_t));
+        fread(ptr_to_bmp->unnecessary, sizeof(uint_fast8_t), ptr_to_bmp->space_between_dib_and_pixel_array, file_ptr);
     }
 
 //    printf("sizeof(ptr_to_bmp->unnecessary): %u\n", sizeof(ptr_to_bmp->unnecessary));
@@ -183,7 +184,7 @@ void open_bmp_file(const char filename[]) {
 
     stBitMapFile bmp_file;
     bmp_file = read_bmp_file(&bmp_file, file_pointer);
-//    auto_adjusting(&bmp_file);
+    auto_adjusting(&bmp_file);
     create_bmp_image(&bmp_file);
 
     fseek(file_pointer, 0, SEEK_SET);
@@ -192,56 +193,84 @@ void open_bmp_file(const char filename[]) {
     free(bmp_file.unnecessary);
     fclose(file_pointer);
 }
-
+/*
 uint32_t get_intensity(stRGB pixel) {
     return (pixel.red + pixel.green + pixel.blue) / 3;
-}
-
-void change_contrast(stRGB *ptr_pixel, float factor) {
+}*/
+/*
+void hange_contrast(stRGB *ptr_pixel, float factor) {
     ptr_pixel->red = ptr_pixel->red * factor; // implicit typecasting
     ptr_pixel->green = ptr_pixel->green * factor; // implicit typecasting
     ptr_pixel->blue = ptr_pixel->blue * factor; // implicit typecasting
 
-}
+}*/
 
 
 void auto_adjusting(stBitMapFile *bitMapFile) {
 
 /*
-     * Find the max and min pixel intensities in the image
+     * Make intensities spread between 255*.95 and 255 * .25
 */
+    uint_fast8_t red_min = (uint_fast8_t)(255*.97F);
+    uint_fast8_t red_max = 0;
+    //
+    uint_fast8_t green_min = (uint_fast8_t)(255*.97F);
+    uint_fast8_t green_max = 0;
+    //
+    uint_fast8_t blue_min = (uint_fast8_t)(255*.97F);
+    uint_fast8_t blue_max = 0;
+
+    /*
+     * Find the lowes and highest intensities of each color
+     * */
+
 
     int32_t i, j;
-    uint_fast32_t new_intensity = 1, current_intensity = 0;
     uint32_t height = bitMapFile->dib_header.bmp_height,
             width = bitMapFile->dib_header.bmp_width;
-    uint32_t maxIntensity = 150, minIntensity = 10;
 
 
     for (i = height - 1; i >= 0; i--) {
         for (j = 0; j < width; j++) {
-            current_intensity = get_intensity((bitMapFile->pixel_array.ptr_to_rgb_row)[i][j]);
-            if (current_intensity > maxIntensity) {
-                maxIntensity = current_intensity;
-            }
-            if (current_intensity < minIntensity) {
-                minIntensity = current_intensity;
-            }
+            uint_fast8_t red = (bitMapFile->pixel_array).ptr_to_rgb_row[i][j].red,
+                    green = (bitMapFile->pixel_array).ptr_to_rgb_row[i][j].green,
+                    blue = (bitMapFile->pixel_array).ptr_to_rgb_row[i][j].blue;
+
+            if (red_min > red) red_min = red;
+            if (red_max < red) red_max = red;
+            //
+            if (green_min > green) green_min = green;
+            if (green_max < green) green_max = green;
+            //
+            if (blue_min > blue) blue_min = blue;
+            if (blue_max < blue) blue_max = blue;
+
         }
     }
-    printf("Minimum pixel intensity: %u\n", minIntensity);
-    printf("Maximum pixel intensity: %u\n", maxIntensity);
 
-    float intensity_factor;
+    // calculate scaling factor max and min should be different
+    // in order to prevent division by zeof
+    float red_scale = 1.0F, green_scale = 1.0F, blue_scale = 1.0F;
+
+    if (red_max > red_min) red_scale = 255.0F / (red_max - red_min);
+    if (green_max > green_min) green_scale = 255.0F / (green_max - green_min);
+    if (blue_max > blue_min) blue_scale = 255.0F / (blue_max - blue_min);
+
+    // normalize pixels
     for (i = height - 1; i >= 0; i--) {
         for (j = 0; j < width; j++) {
-            current_intensity = get_intensity((bitMapFile->pixel_array.ptr_to_rgb_row)[i][j]);
-            intensity_factor = (255.0F * ((current_intensity - minIntensity) /
-                                               (maxIntensity - minIntensity)));
-//            if (intensity_factor < 0 || intensity_factor > 255) printf("kak tak?");
-            change_contrast((bitMapFile->pixel_array.ptr_to_rgb_row)[i] + j, intensity_factor);
-
-        }
+            ((bitMapFile->pixel_array).ptr_to_rgb_row[i][j].red) =
+                    (uint_fast8_t) (red_scale * ((bitMapFile->pixel_array).ptr_to_rgb_row[i][j].red - red_min));
+            ((bitMapFile->pixel_array).ptr_to_rgb_row[i][j].green) =
+                    (uint_fast8_t) (green_scale * ((bitMapFile->pixel_array).ptr_to_rgb_row[i][j].green - green_min));
+            ((bitMapFile->pixel_array).ptr_to_rgb_row[i][j].blue) =
+                    (uint_fast8_t) (blue_scale * ((bitMapFile->pixel_array).ptr_to_rgb_row[i][j].blue - blue_min));
+            /*if (((bitMapFile->pixel_array).ptr_to_rgb_row[i][j].red - red_min) < 0) printf("rA\n");
+            if (((bitMapFile->pixel_array).ptr_to_rgb_row[i][j].green - green_min) < 0) printf("gA\n");
+            if (((bitMapFile->pixel_array).ptr_to_rgb_row[i][j].blue - blue_min) < 0)
+                printf("bA%d %d\n",
+                       (bitMapFile->pixel_array).ptr_to_rgb_row[i][j].blue, blue_min);
+        */}
     }
 
 
