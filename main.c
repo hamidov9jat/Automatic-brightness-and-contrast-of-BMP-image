@@ -6,11 +6,11 @@
 #include "validation.h"
 
 int main(int argc, char **argv){
-//
-//
-//    printf("res : %d\n", isBpm("hello.bmp"));
-//    printf("res : %d\n", isBpm("hello.png"));
-//
+
+
+    printf("res : %d\n", isBpm("hello.bmp"));
+    printf("res : %d\n", isBpm("hello.png"));
+
 
     return 0;
 }
