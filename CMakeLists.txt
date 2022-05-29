@@ -4,4 +4,4 @@ project(dsa_project C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(dsa_project
-        main.c bmp.c bmp.h)
+        main.c bmp.c bmp.h helper_functions.c helper_functions.h)

@@ -82,6 +82,12 @@
 		<Unit filename="C:/Users/User/Documents/Other/dsa L2/Automatic-brightness-and-contrast-of-BMP-image/bmp.h">
 			<Option target="dsa_project"/>
 		</Unit>
+		<Unit filename="C:/Users/User/Documents/Other/dsa L2/Automatic-brightness-and-contrast-of-BMP-image/helper_functions.c">
+			<Option target="dsa_project"/>
+		</Unit>
+		<Unit filename="C:/Users/User/Documents/Other/dsa L2/Automatic-brightness-and-contrast-of-BMP-image/helper_functions.h">
+			<Option target="dsa_project"/>
+		</Unit>
 		<Unit filename="C:/Users/User/Documents/Other/dsa L2/Automatic-brightness-and-contrast-of-BMP-image/main.c">
 			<Option target="dsa_project"/>
 		</Unit>

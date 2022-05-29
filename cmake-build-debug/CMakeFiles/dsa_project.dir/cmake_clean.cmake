@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/dsa_project.dir/bmp.c.obj"
   "CMakeFiles/dsa_project.dir/bmp.c.obj.d"
+  "CMakeFiles/dsa_project.dir/helper_functions.c.obj"
+  "CMakeFiles/dsa_project.dir/helper_functions.c.obj.d"
   "CMakeFiles/dsa_project.dir/main.c.obj"
   "CMakeFiles/dsa_project.dir/main.c.obj.d"
   "dsa_project.exe"

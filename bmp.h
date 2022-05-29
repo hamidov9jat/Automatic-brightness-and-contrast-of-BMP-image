@@ -4,7 +4,7 @@
 
 #ifndef DSA_PROJECT_BMP_H
 #define DSA_PROJECT_BMP_H
-
+#define DSA_PROJECT_HELPER_FUNCTIONS_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -12,6 +12,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include <errno.h>
+#include <stdbool.h>
+#include <getopt.h>
 #endif //DSA_PROJECT_BMP_H
 
 /* WARNING!!! Using C99 standard of C!
