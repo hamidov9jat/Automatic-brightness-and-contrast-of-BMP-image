@@ -47,8 +47,8 @@ void free_bmp_image(stImage *bmp_image) {
     free(bmp_image->ptr_to_rgb_row); // free array of rows
 }
 
-void create_bmp_image(const stBitMapFile *const bmpfile) {
-    FILE *write_file_pointer = fopen("new_image.bmp", "wb");
+void create_bmp_image(const *filename, const stBitMapFile *const bmpfile) {
+    FILE *write_file_pointer = fopen(filename, "wb");
     if (write_file_pointer == NULL) {
         puts("Error while creating bmp image");
         printf("%s\n", strerror(errno));
@@ -171,8 +171,8 @@ stBitMapFile read_bmp_file(stBitMapFile *ptr_to_bmp, FILE *file_ptr) {
 
 }
 
-void open_bmp_file(const char filename[]) {
-    FILE *file_pointer = fopen(filename, "rb");
+void process_bmp_file(const char source[], const char dest[]) {
+    FILE *file_pointer = fopen(source, "rb");
 
     if (file_pointer == NULL) {
         puts("Error while reading bmp image");
@@ -184,7 +184,7 @@ void open_bmp_file(const char filename[]) {
     stBitMapFile bmp_file;
     bmp_file = read_bmp_file(&bmp_file, file_pointer);
     auto_adjusting(&bmp_file);
-    create_bmp_image(&bmp_file);
+    create_bmp_image(dest, &bmp_file);
 
     fseek(file_pointer, 0, SEEK_SET);
 

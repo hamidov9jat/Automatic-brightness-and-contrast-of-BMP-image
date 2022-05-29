@@ -37,10 +37,7 @@ void validate_run(int_fast32_t argc, char **argv) {
         puts("Invalid number of arguments");
         helper();
         exit(1);
-    }/* else if (argc == 2) {
-        argc++;
-
-    } */
+    }
     else if (argc == 4) {
 
         argc--;
@@ -56,11 +53,11 @@ void validate_run(int_fast32_t argc, char **argv) {
                     puts("Please specify correct .bmp file");
                     exit(1);
                 }
-
                 break;
 
             case 'h':
                 helper();
+                exit(0);
                 break;
             default:
                 puts("Default");
