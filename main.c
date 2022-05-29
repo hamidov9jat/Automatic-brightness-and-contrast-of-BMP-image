@@ -3,11 +3,14 @@
 //
 
 #include "bmp.h"
+#include "validation.h"
 
 int main(int argc, char **argv){
-
-//    open_bmp_file("");
-
+//
+//
+//    printf("res : %d\n", isBpm("hello.bmp"));
+//    printf("res : %d\n", isBpm("hello.png"));
+//
 
     return 0;
 }
