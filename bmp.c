@@ -47,7 +47,7 @@ void free_bmp_image(stImage *bmp_image) {
     free(bmp_image->ptr_to_rgb_row); // free array of rows
 }
 
-void create_bmp_image(const *filename, const stBitMapFile *const bmpfile) {
+void create_bmp_image(const char *filename, const stBitMapFile *const bmpfile) {
     FILE *write_file_pointer = fopen(filename, "wb");
     if (write_file_pointer == NULL) {
         puts("Error while creating bmp image");
@@ -195,17 +195,21 @@ void process_bmp_file(const char source[], const char dest[]) {
 
 void auto_adjusting(stBitMapFile *bitMapFile) {
 
+#define MAX_COLOR_VALUE 255.0F
+#define PERCENTILE 0.4F
+
 /*
      * Make intensities spread between 255*.95 and 255 * .25
+     * implicit typecasting
 */
-    uint_fast8_t red_min = (uint_fast8_t)(255*.97F);
-    uint_fast8_t red_max = 0;
+    uint_fast8_t red_min = (uint_fast8_t) (255 * (1-PERCENTILE));
+    uint_fast8_t red_max = MAX_COLOR_VALUE * PERCENTILE;
     //
-    uint_fast8_t green_min = (uint_fast8_t)(255*.97F);
-    uint_fast8_t green_max = 0;
+    uint_fast8_t green_min = (uint_fast8_t) (MAX_COLOR_VALUE * (1-PERCENTILE));
+    uint_fast8_t green_max = MAX_COLOR_VALUE * PERCENTILE;
     //
-    uint_fast8_t blue_min = (uint_fast8_t)(255*.97F);
-    uint_fast8_t blue_max = 0;
+    uint_fast8_t blue_min = (uint_fast8_t) (MAX_COLOR_VALUE * (1-PERCENTILE));
+    uint_fast8_t blue_max = MAX_COLOR_VALUE * PERCENTILE;
 
     /*
      * Find the lowes and highest intensities of each color
@@ -236,12 +240,12 @@ void auto_adjusting(stBitMapFile *bitMapFile) {
     }
 
     // calculate scaling factor max and min should be different
-    // in order to prevent division by zeof
+    // in order to prevent division by zero
     float red_scale = 1.0F, green_scale = 1.0F, blue_scale = 1.0F;
 
-    if (red_max > red_min) red_scale = 255.0F / (red_max - red_min);
-    if (green_max > green_min) green_scale = 255.0F / (green_max - green_min);
-    if (blue_max > blue_min) blue_scale = 255.0F / (blue_max - blue_min);
+    if (red_max > red_min) red_scale = MAX_COLOR_VALUE / (red_max - red_min);
+    if (green_max > green_min) green_scale = MAX_COLOR_VALUE / (green_max - green_min);
+    if (blue_max > blue_min) blue_scale = MAX_COLOR_VALUE / (blue_max - blue_min);
 
     // normalize pixels
     for (i = height - 1; i >= 0; i--) {

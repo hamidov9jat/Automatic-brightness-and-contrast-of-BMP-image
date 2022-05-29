@@ -62,6 +62,7 @@ void validate_run(int_fast32_t argc, char **argv) {
             default:
                 puts("Default");
                 helper();
+                exit(0);
         }
 /*
 
