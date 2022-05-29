@@ -31,7 +31,8 @@ CMakeFiles/dsa_project.dir/bmp.c.obj: ../bmp.c \
   C:/Program\ Files/JetBrains/CLion\ 2022.1.1/bin/mingw/x86_64-w64-mingw32/include/stdint.h \
   C:/Program\ Files/JetBrains/CLion\ 2022.1.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/stddef.h \
   C:/Program\ Files/JetBrains/CLion\ 2022.1.1/bin/mingw/x86_64-w64-mingw32/include/stddef.h \
-  C:/Program\ Files/JetBrains/CLion\ 2022.1.1/bin/mingw/x86_64-w64-mingw32/include/math.h
+  C:/Program\ Files/JetBrains/CLion\ 2022.1.1/bin/mingw/x86_64-w64-mingw32/include/math.h \
+  C:/Program\ Files/JetBrains/CLion\ 2022.1.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/stdbool.h
 
 CMakeFiles/dsa_project.dir/main.c.obj: ../main.c \
   ../bmp.h \
@@ -63,7 +64,8 @@ CMakeFiles/dsa_project.dir/main.c.obj: ../main.c \
   C:/Program\ Files/JetBrains/CLion\ 2022.1.1/bin/mingw/x86_64-w64-mingw32/include/stdint.h \
   C:/Program\ Files/JetBrains/CLion\ 2022.1.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/stddef.h \
   C:/Program\ Files/JetBrains/CLion\ 2022.1.1/bin/mingw/x86_64-w64-mingw32/include/stddef.h \
-  C:/Program\ Files/JetBrains/CLion\ 2022.1.1/bin/mingw/x86_64-w64-mingw32/include/math.h
+  C:/Program\ Files/JetBrains/CLion\ 2022.1.1/bin/mingw/x86_64-w64-mingw32/include/math.h \
+  C:/Program\ Files/JetBrains/CLion\ 2022.1.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/stdbool.h
 
 
 ../bmp.c:
@@ -129,3 +131,5 @@ C:/Program\ Files/JetBrains/CLion\ 2022.1.1/bin/mingw/x86_64-w64-mingw32/include
 C:/Program\ Files/JetBrains/CLion\ 2022.1.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/stddef.h:
 
 ../main.c:
+
+C:/Program\ Files/JetBrains/CLion\ 2022.1.1/bin/mingw/lib/gcc/x86_64-w64-mingw32/11.2.0/include/stdbool.h:
