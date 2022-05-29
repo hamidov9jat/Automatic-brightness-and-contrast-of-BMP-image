@@ -10,5 +10,5 @@ void help() {
     printf("Your input must be in format : \n");
     printf("./main file1.bmp > file2.bmp\n");
     printf("./main file1.bmp -o file2.bmp\n");
-    printf("(If you are on Windows, please use double quotes around file names)");
+    printf("(If you are on Windows, please use double quotes around file names)\n");
 }
