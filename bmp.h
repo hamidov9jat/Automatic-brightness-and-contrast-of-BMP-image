@@ -113,6 +113,4 @@ void create_bmp_image(const stBitMapFile * bmpfile);
 void free_bmp_image(stImage *bmp_image);
 stBitMapFile read_bmp_file(stBitMapFile *ptr_to_bmp, FILE *file_ptr);
 void open_bmp_file(const char filename[]);
-uint32_t get_intensity(stRGB pixel);
-void change_contrast(stRGB *ptr_pixel, float factor);
 void auto_adjusting(stBitMapFile *bitMapFile);
