@@ -196,7 +196,7 @@ void process_bmp_file(const char source[], const char dest[]) {
 void auto_adjusting(stBitMapFile *bitMapFile) {
 
 #define MAX_COLOR_VALUE 255.0F
-#define PERCENTILE 0.4F
+#define PERCENTILE 0.99F
 
 /*
      * Make intensities spread between 255*.95 and 255 * .25
