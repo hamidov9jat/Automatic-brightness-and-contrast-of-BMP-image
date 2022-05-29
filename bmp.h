@@ -13,6 +13,7 @@
 #include <math.h>
 #include <errno.h>
 #include <stdbool.h>
+#include <getopt.h>
 #endif //DSA_PROJECT_BMP_H
 
 /* WARNING!!! Using C99 standard of C!

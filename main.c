@@ -9,12 +9,26 @@ bool isBmp(char *s);
 int main(int argc, char **argv) {
 
 //    open_bmp_file("C:\\Users\\User\\Documents\\Other\\dsa L2\\Automatic-brightness-and-contrast-of-BMP-image\\sampleview.bmp");
-
+/*
     printf("%d\n", argc);
     printf("last character is %d\n", argv[1][5]);
 //    printf("%s\n", argv[1]);
     printf("%d\n", strlen(argv[1]) );
-    printf("is bmp %d\n", isBmp(argv[1]));
+    printf("is bmp %d\n", isBmp(argv[1]));*/
+
+    int opt;
+    while ((opt = getopt(argc, argv, "o:h:"))) {
+        switch (opt) {
+            case 'o':
+                puts("Output function");
+                break;
+            case 'h':
+                puts("Helping function");
+                break;
+            default:
+                puts("Invalid arguments");
+        }
+    }
 
 
     return 0;
@@ -37,3 +51,4 @@ bool isBmp(char *s) {
 
     return ret;
 }
+

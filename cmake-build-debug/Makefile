@@ -152,6 +152,30 @@ bmp.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/bmp.c.s
 .PHONY : bmp.c.s
 
+helper_functions.obj: helper_functions.c.obj
+.PHONY : helper_functions.obj
+
+# target to build an object file
+helper_functions.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/helper_functions.c.obj
+.PHONY : helper_functions.c.obj
+
+helper_functions.i: helper_functions.c.i
+.PHONY : helper_functions.i
+
+# target to preprocess a source file
+helper_functions.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/helper_functions.c.i
+.PHONY : helper_functions.c.i
+
+helper_functions.s: helper_functions.c.s
+.PHONY : helper_functions.s
+
+# target to generate assembly for a file
+helper_functions.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\dsa_project.dir\build.make CMakeFiles/dsa_project.dir/helper_functions.c.s
+.PHONY : helper_functions.c.s
+
 main.obj: main.c.obj
 .PHONY : main.obj
 
@@ -188,6 +212,9 @@ help:
 	@echo ... bmp.obj
 	@echo ... bmp.i
 	@echo ... bmp.s
+	@echo ... helper_functions.obj
+	@echo ... helper_functions.i
+	@echo ... helper_functions.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
