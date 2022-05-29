@@ -195,21 +195,28 @@ void process_bmp_file(const char source[], const char dest[]) {
 
 void auto_adjusting(stBitMapFile *bitMapFile) {
 
-#define MAX_COLOR_VALUE 255.0F
-#define PERCENTILE 0.99F
+#define MAX_COLOR_VALUE 255.0
+#define PERCENTILE 0.40
+
 
 /*
      * Make intensities spread between 255*.95 and 255 * .25
-     * implicit typecasting
+     * here maxValue < minValue
 */
-    uint_fast8_t red_min = (uint_fast8_t) (255 * (1-PERCENTILE));
-    uint_fast8_t red_max = MAX_COLOR_VALUE * PERCENTILE;
+    uint_fast8_t minValue = 191,
+        maxValue = 64;
+
+    uint_fast8_t red_min = minValue;
+//    uint_fast8_t red_min = (uint_fast8_t )(MAX_COLOR_VALUE * PERCENTILE);
+    uint_fast8_t red_max = maxValue;
     //
-    uint_fast8_t green_min = (uint_fast8_t) (MAX_COLOR_VALUE * (1-PERCENTILE));
-    uint_fast8_t green_max = MAX_COLOR_VALUE * PERCENTILE;
+    uint_fast8_t green_min = minValue;
+//    uint_fast8_t greenminx = (uint_fast8_t )(MAX_COLOR_VALUE * PERCENTILE);
+    uint_fast8_t green_max = maxValue;
     //
-    uint_fast8_t blue_min = (uint_fast8_t) (MAX_COLOR_VALUE * (1-PERCENTILE));
-    uint_fast8_t blue_max = MAX_COLOR_VALUE * PERCENTILE;
+    uint_fast8_t blue_min = minValue;
+//    uint_fast8_t blue_min = (uint_fast8_t )(MAX_COLOR_VALUE * PERCENTILE);
+    uint_fast8_t blue_max = maxValue;
 
     /*
      * Find the lowes and highest intensities of each color
@@ -241,7 +248,7 @@ void auto_adjusting(stBitMapFile *bitMapFile) {
 
     // calculate scaling factor max and min should be different
     // in order to prevent division by zero
-    float red_scale = 1.0F, green_scale = 1.0F, blue_scale = 1.0F;
+    double red_scale = 1.0, green_scale = 1.0, blue_scale = 1.0;
 
     if (red_max > red_min) red_scale = MAX_COLOR_VALUE / (red_max - red_min);
     if (green_max > green_min) green_scale = MAX_COLOR_VALUE / (green_max - green_min);
