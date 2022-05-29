@@ -45,7 +45,7 @@ void free_bmp_image(stImage *bmp_image) {
     free(bmp_image->ptr_to_rgb_row); // free array of rows
 }
 
-void create_bmp_image(const stBitMapFile * const bmpfile) {
+void create_bmp_image(const stBitMapFile *const bmpfile) {
     FILE *write_file_pointer = fopen("new_image.bmp", "wb");
     if (write_file_pointer == NULL) {
         puts("Error while creating bmp image");
@@ -53,26 +53,28 @@ void create_bmp_image(const stBitMapFile * const bmpfile) {
         exit(errno);
     }
 
-    // writing bmp_header and dib_header into file
+    // writing bmp_header and dib_header into file and if necessary additional space in between dib and pixel array
     fwrite(&(bmpfile->bmp_header), sizeof(bmpfile->bmp_header), 1, write_file_pointer);
     fwrite(&(bmpfile->dib_header), sizeof(bmpfile->dib_header), 1, write_file_pointer);
-    fwrite(&(bmpfile->unnecessary), sizeof(bmpfile->unnecessary), 1, write_file_pointer);
+    if (bmpfile->space_between_dib_and_pixel_array > 0) {
+        fwrite(bmpfile->unnecessary, sizeof(uint_fast8_t), bmpfile->space_between_dib_and_pixel_array,
+               write_file_pointer);
+    }
 
+    printf("While writing unecessary is %u %x\n", (bmpfile->unnecessary)[1], (bmpfile->unnecessary)[1]);
 
     uint_fast32_t bytes_to_read =
-            (uint_fast32_t)(ceil((bmpfile->dib_header.bits_per_pixel * bmpfile->dib_header.bmp_width))
-                            / 32) * 4;
+            (uint_fast32_t) (ceil((bmpfile->dib_header.bits_per_pixel * bmpfile->dib_header.bmp_width))
+                             / 32) * 4;
     uint_fast32_t number_of_rgb = bytes_to_read / sizeof(stRGB);
     uint_fast8_t padding_size = bytes_to_read % sizeof(stRGB);
-    int32_t space_between_dib_image = sizeof(bmpfile->unnecessary);
 
     puts("------------Inside create----------");
     printf("bytes_to_read %u\n", bytes_to_read);
     printf("number_of_rgb %u\n", number_of_rgb);
     printf("padding_size %d\n", padding_size);
-    printf("space_between_dib_image %d\n", space_between_dib_image);
+    printf("space_between_dib_image %d\n", bmpfile->space_between_dib_and_pixel_array);
     puts("-----------End create-----------------");
-
 
 
     int32_t i;
@@ -139,24 +141,25 @@ stBitMapFile read_bmp_file(stBitMapFile *ptr_to_bmp, FILE *file_ptr) {
     uint_fast32_t number_of_rgb = bytes_to_read / sizeof(stRGB);
 
     uint_fast8_t padding_size = bytes_to_read % sizeof(stRGB);
-    int32_t space_between_dib_image =
+    ptr_to_bmp->space_between_dib_and_pixel_array =
             ptr_to_bmp->bmp_header.image_offset - (sizeof(ptr_to_bmp->bmp_header) + sizeof(ptr_to_bmp->dib_header));
 
     puts("------------Inside read bmp part 2----------");
     printf("bytes_to_read %u\n", bytes_to_read);
     printf("number_of_rgb %u\n", number_of_rgb);
     printf("padding_size %u\n", padding_size);
-    printf("space_between_dib_image %d\n", space_between_dib_image);
+    printf("ptr_to_bmp->space_between_dib_and_pixel_array %d\n", ptr_to_bmp->space_between_dib_and_pixel_array);
     puts("-----------End read-----------------");
 
-    fseek(file_ptr, ptr_to_bmp->bmp_header.image_offset - space_between_dib_image, SEEK_SET);
-    if (space_between_dib_image > 0) {
-        memcpy(&(ptr_to_bmp->unnecessary), file_ptr, space_between_dib_image);
+    fseek(file_ptr, sizeof (ptr_to_bmp->bmp_header) + sizeof (ptr_to_bmp->dib_header), SEEK_SET);
+    if (ptr_to_bmp->space_between_dib_and_pixel_array > 0) {
+        ptr_to_bmp->unnecessary = (uint_fast8_t *) malloc(ptr_to_bmp->space_between_dib_and_pixel_array * sizeof (uint_fast8_t));
+        fread(ptr_to_bmp->unnecessary,sizeof (uint_fast8_t), ptr_to_bmp->space_between_dib_and_pixel_array, file_ptr);
     }
 
-    printf("sizeof(ptr_to_bmp->unnecessary): %u\n", sizeof(ptr_to_bmp->unnecessary));
-    printf("%u and %x hex is *(ptr_to_bmp->unnecessary + 2)\n", *(ptr_to_bmp->unnecessary + 17),
-           *(ptr_to_bmp->unnecessary + 17));
+//    printf("sizeof(ptr_to_bmp->unnecessary): %u\n", sizeof(ptr_to_bmp->unnecessary));
+//    printf("%u and %x hex is *(ptr_to_bmp->unnecessary + 2)\n", *(ptr_to_bmp->unnecessary + 17),
+//           *(ptr_to_bmp->unnecessary + 17));
 
     fseek(file_ptr, ptr_to_bmp->bmp_header.image_offset, SEEK_SET);
     ptr_to_bmp->pixel_array = read_bmp_image(file_ptr, ptr_to_bmp->dib_header.bmp_width,
@@ -186,7 +189,7 @@ void open_bmp_file(const char filename[]) {
     fseek(file_pointer, 0, SEEK_SET);
 
     free_bmp_image(&(bmp_file.pixel_array));
-
+    free(bmp_file.unnecessary);
     fclose(file_pointer);
 }
 
