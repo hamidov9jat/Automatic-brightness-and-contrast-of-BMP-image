@@ -4,7 +4,7 @@
 
 #ifndef DSA_PROJECT_BMP_H
 #define DSA_PROJECT_BMP_H
-
+#define DSA_PROJECT_HELPER_FUNCTIONS_H
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
