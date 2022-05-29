@@ -215,7 +215,7 @@ void auto_adjusting(stBitMapFile *bitMapFile) {
     uint_fast32_t new_intensity = 1, current_intensity = 0;
     uint32_t height = bitMapFile->dib_header.bmp_height,
             width = bitMapFile->dib_header.bmp_width;
-    uint32_t maxIntensity = 150, minIntensity = 100;
+    uint32_t maxIntensity = 150, minIntensity = 10;
 
 
     for (i = height - 1; i >= 0; i--) {
@@ -236,9 +236,9 @@ void auto_adjusting(stBitMapFile *bitMapFile) {
     for (i = height - 1; i >= 0; i--) {
         for (j = 0; j < width; j++) {
             current_intensity = get_intensity((bitMapFile->pixel_array.ptr_to_rgb_row)[i][j]);
-            intensity_factor = (float) (255 * ((current_intensity - minIntensity) /
+            intensity_factor = (255.0F * ((current_intensity - minIntensity) /
                                                (maxIntensity - minIntensity)));
-            if (intensity_factor < 0 || intensity_factor > 255) printf("kak tak?");
+//            if (intensity_factor < 0 || intensity_factor > 255) printf("kak tak?");
             change_contrast((bitMapFile->pixel_array.ptr_to_rgb_row)[i] + j, intensity_factor);
 
         }
