@@ -25,8 +25,8 @@ bool isBmp(char *s) {
 
 void helper() {
     printf("\nYour input must be in format : \n");
-    printf("./main file1.bmp > file2.bmp\nOr like this: ");
-    printf("./main file1.bmp -o file2.bmp\n");
+    printf("./autoadjust file1.bmp > file2.bmp\nOr like this: ");
+    printf("./autoadjust file1.bmp -o file2.bmp\n");
     printf("(If you are on Windows, please use double quotes around file names)\n");
     printf("Use: ./main -h for help\n\n");
 }
