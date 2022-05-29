@@ -152,7 +152,6 @@ stBitMapFile read_bmp_file(stBitMapFile *ptr_to_bmp, FILE *file_ptr) {
     // number of rgb structures in each row (integral division is used)
     uint_fast32_t number_of_rgb = bytes_to_read / sizeof(stRGB);
 
-    uint_fast8_t padding_size = bytes_to_read % sizeof(stRGB);
     ptr_to_bmp->space_between_dib_and_pixel_array =
             ptr_to_bmp->bmp_header.image_offset - (sizeof(ptr_to_bmp->bmp_header) + sizeof(ptr_to_bmp->dib_header));
 
