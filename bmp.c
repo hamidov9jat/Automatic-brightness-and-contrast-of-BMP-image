@@ -252,12 +252,7 @@ void auto_adjusting(stBitMapFile *bitMapFile) {
                     (uint_fast8_t) (green_scale * ((bitMapFile->pixel_array).ptr_to_rgb_row[i][j].green - green_min));
             ((bitMapFile->pixel_array).ptr_to_rgb_row[i][j].blue) =
                     (uint_fast8_t) (blue_scale * ((bitMapFile->pixel_array).ptr_to_rgb_row[i][j].blue - blue_min));
-            /*if (((bitMapFile->pixel_array).ptr_to_rgb_row[i][j].red - red_min) < 0) printf("rA\n");
-            if (((bitMapFile->pixel_array).ptr_to_rgb_row[i][j].green - green_min) < 0) printf("gA\n");
-            if (((bitMapFile->pixel_array).ptr_to_rgb_row[i][j].blue - blue_min) < 0)
-                printf("bA%d %d\n",
-                       (bitMapFile->pixel_array).ptr_to_rgb_row[i][j].blue, blue_min);
-        */}
+        }
     }
 
 
